@@ -64,7 +64,7 @@ export default function Home() {
           <h2 className={"text-center text-2xl font-semibold"}>Domains</h2>
         </div>
         {/* Socials TODO: move this into its own component */}
-        <SocialResult />
+        <SocialResult searchTerm={searchQuery} tlds={[".com", ".net"]} />
         {/* SEO TODO: move this into its own component */}
         <div className={"bg-gray-900 rounded-lg p-4"}>
           <h2 className={"text-center text-2xl font-semibold"}>SEO</h2>
