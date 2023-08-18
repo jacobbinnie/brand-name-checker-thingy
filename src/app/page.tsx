@@ -36,7 +36,7 @@ export default function Home() {
     }, [searchQuery]);
 
     return (
-        <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-black">
+        <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
             <LandingInfo/>
             <Search
                 searchQuery={searchQuery}
@@ -53,10 +53,19 @@ export default function Home() {
                     Domain available!
                 </p>
             )}
-            <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-                <div className={"bg-white rounded-lg p-4"}/>
-                <div className={"bg-white rounded-lg p-4"}/>
-                <div className={"bg-white rounded-lg p-4"}/>
+            <div className={"w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4"}>
+                {/* Domains TODO: move this into its own component */}
+                <div className={"bg-gray-900 rounded-lg p-4"}>
+                    <h2 className={'text-center text-2xl font-semibold'}>Domains</h2>
+                </div>
+                {/* Socials TODO: move this into its own component */}
+                <div className={"bg-gray-900 rounded-lg p-4 flex flex-col "}>
+                    <h2 className={'text-center text-2xl font-semibold'}>Socials</h2>
+                </div>
+                {/* SEO TODO: move this into its own component */}
+                <div className={"bg-gray-900 rounded-lg p-4"}>
+                    <h2 className={'text-center text-2xl font-semibold'}>SEO</h2>
+                </div>
             </div>
         </div>
     );
