@@ -4,6 +4,7 @@ import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import SocialResult from "@/components/SocialResult";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +37,7 @@ export default function Home() {
   }, [searchQuery]);
 
   return (
-    <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-black">
+    <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
       <LandingInfo />
       <Search
         searchQuery={searchQuery}
@@ -53,6 +54,22 @@ export default function Home() {
           Domain available!
         </p>
       )}
+      <div
+        className={
+          "w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4"
+        }
+      >
+        {/* Domains TODO: move this into its own component */}
+        <div className={"bg-gray-900 rounded-lg p-4"}>
+          <h2 className={"text-center text-2xl font-semibold"}>Domains</h2>
+        </div>
+        {/* Socials TODO: move this into its own component */}
+        <SocialResult />
+        {/* SEO TODO: move this into its own component */}
+        <div className={"bg-gray-900 rounded-lg p-4"}>
+          <h2 className={"text-center text-2xl font-semibold"}>SEO</h2>
+        </div>
+      </div>
     </div>
   );
 }
