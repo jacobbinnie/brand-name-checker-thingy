@@ -9,9 +9,10 @@ export async function GET(request: NextRequest) {
 
   const options = {
     method: "GET",
+    url: "https://check-username.p.rapidapi.com/check/instagram/username",
     headers: {
-      "User-Agent":
-        "Instagram 76.0.0.15.395 Android (24/7.0; 640dpi; 1440x2560; samsung; SM-G930F; herolte; samsungexynos8890; en_US; 138226743)",
+      "X-RapidAPI-Key": "9d141b7d56msh6670ba72bcfef10p10cc9cjsnf1fe5fa69209",
+      "X-RapidAPI-Host": "check-username.p.rapidapi.com",
     },
   };
 

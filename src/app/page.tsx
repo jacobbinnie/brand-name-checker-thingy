@@ -3,16 +3,24 @@ import LandingInfo from "@/components/LandingInfo";
 import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SocialResult from "@/components/SocialResult";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [displaySearchQuery, setDisplaySearchQuery] = useState("");
   const [domainExpiry, setDomainExpiry] = useState("");
   const [domainAvailable, setDomainAvailable] = useState(false);
 
+  const debounceTimerRef = useRef<number>();
+
   const handleUpdateSearchQuery = (query: string) => {
-    setSearchQuery(query);
+    setDisplaySearchQuery(query);
+    // debounce
+    clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = window.setTimeout(() => {
+      setSearchQuery(query);
+    }, 500);
   };
 
   const {
@@ -40,7 +48,7 @@ export default function Home() {
     <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
       <LandingInfo />
       <Search
-        searchQuery={searchQuery}
+        searchQuery={displaySearchQuery}
         handleUpdateSearchQuery={handleUpdateSearchQuery}
         loading={domainLoading}
       />

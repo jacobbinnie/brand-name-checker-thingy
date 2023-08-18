@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR from "swr";
 
 interface SocialResultProps {
@@ -17,7 +16,7 @@ function SocialResult({ searchTerm, tlds }: SocialResultProps) {
 
   return (
     <div className={"bg-gray-900 rounded-lg p-4 flex flex-col"}>
-      {data?.available === undefined ? "Type to start" : "Nope"}
+      {searchTerm}
       <h2 className={"text-center text-2xl font-semibold"}>Socials</h2>
       <table>
         <thead>
