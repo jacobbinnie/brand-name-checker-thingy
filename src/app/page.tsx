@@ -4,6 +4,7 @@ import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
 import clsx from "clsx";
 import {useEffect, useState} from "react";
+import SocialResult from "@/components/SocialResult";
 
 export default function Home() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -59,9 +60,7 @@ export default function Home() {
                     <h2 className={'text-center text-2xl font-semibold'}>Domains</h2>
                 </div>
                 {/* Socials TODO: move this into its own component */}
-                <div className={"bg-gray-900 rounded-lg p-4 flex flex-col "}>
-                    <h2 className={'text-center text-2xl font-semibold'}>Socials</h2>
-                </div>
+                <SocialResult/>
                 {/* SEO TODO: move this into its own component */}
                 <div className={"bg-gray-900 rounded-lg p-4"}>
                     <h2 className={'text-center text-2xl font-semibold'}>SEO</h2>
