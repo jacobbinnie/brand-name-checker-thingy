@@ -53,7 +53,10 @@ export default function Home() {
         loading={domainLoading}
       />
 
-      <SelectedDomainTabs selectedDomains={selectedDomains} />
+      <SelectedDomainTabs
+        selectedDomains={selectedDomains}
+        handleUpdateSelectedDomains={handleUpdateSelectedDomains}
+      />
 
       <DomainSelector
         handleUpdateSelectedDomains={handleUpdateSelectedDomains}
