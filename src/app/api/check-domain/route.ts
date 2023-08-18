@@ -6,13 +6,13 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
 
-  const updatedEndpoint = `https://zozor54-whois-lookup-v1.p.rapidapi.com/?domain=${q}&format=json&_forceRefresh=0`;
+  const updatedEndpoint = `https://pointsdb-bulk-domain-check-v1.p.rapidapi.com/domain_check?domains=${q}`;
 
   const options = {
     method: "GET",
     headers: {
       "X-RapidAPI-Key": RAPID_API_KEY,
-      "X-RapidAPI-Host": "zozor54-whois-lookup-v1.p.rapidapi.com",
+      "X-RapidAPI-Host": "pointsdb-bulk-domain-check-v1.p.rapidapi.com",
     },
   };
 

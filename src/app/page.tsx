@@ -3,16 +3,28 @@ import DomainSelector from "@/components/DomainSelector";
 import LandingInfo from "@/components/LandingInfo";
 import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SocialResult from "@/components/SocialResult";
+import domainEndings from "@/utils/domainEndings.json";
+import SelectedDomainTabs from "@/components/SelectedDomainTabs";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [domainExpiry, setDomainExpiry] = useState("");
-  const [domainAvailable, setDomainAvailable] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
+  const [confirmedSearchQuery, setConfirmedSearchQuery] = useState("");
+
+  const handleConfirmSearchQuery = () => {
+    let domainUrls: string[] = [];
+
+    if (selectedDomains.length > 0) {
+      domainUrls = selectedDomains.map((domain) => searchQuery + domain);
+    } else {
+      domainUrls = domainEndings.map((domain) => searchQuery + domain);
+    }
+
+    const urlQueryString = domainUrls.join(",");
+    setConfirmedSearchQuery(urlQueryString);
+  };
 
   const handleUpdateSelectedDomains = (domain: string) => {
     if (selectedDomains.includes(domain)) {
@@ -30,22 +42,7 @@ export default function Home() {
     data: domainData,
     error: domainError,
     loading: domainLoading,
-  } = useDomain(searchQuery);
-
-  useEffect(() => {
-    if (domainData === "Available") {
-      setDomainAvailable(true);
-    } else if (domainData) {
-      const parsedData = Date.parse(domainData);
-      const newDate = new Date(parsedData);
-      setDomainExpiry(newDate.toDateString());
-    }
-  }, [domainData]);
-
-  useEffect(() => {
-    setDomainExpiry("");
-    setDomainAvailable(false);
-  }, [searchQuery]);
+  } = useDomain(confirmedSearchQuery);
 
   return (
     <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
@@ -55,75 +52,22 @@ export default function Home() {
         handleUpdateSearchQuery={handleUpdateSearchQuery}
         loading={domainLoading}
       />
-      {domainExpiry && (
-        <p className={clsx(domainExpiry !== undefined ? "block" : "hidden")}>
-          Sorry, this domain is registered and expires on {domainExpiry}
-        </p>
-      )}
-      {domainAvailable && (
-        <p className={clsx(domainExpiry !== undefined ? "block" : "hidden")}>
-          Domain available!
-        </p>
-      )}
+
+      <SelectedDomainTabs selectedDomains={selectedDomains} />
+
       <DomainSelector
         handleUpdateSelectedDomains={handleUpdateSelectedDomains}
         selectedDomains={selectedDomains}
-        domains={[
-          ".com",
-          ".club",
-          ".net",
-          ".co.nz",
-          ".org",
-          ".net",
-          ".edu",
-          ".io",
-          ".com.au",
-          ".mil",
-          ".info",
-          ".biz",
-          ".us",
-          ".co",
-          ".io",
-          ".tv",
-          ".me",
-          ".uk",
-          ".ca",
-          ".au",
-          ".de",
-          ".jp",
-          ".cn",
-          ".ru",
-          ".br",
-          ".es",
-          ".it",
-          ".nl",
-          ".se",
-          ".ch",
-          ".at",
-          ".mx",
-          ".za",
-          ".in",
-          ".kr",
-          ".sg",
-          ".ae",
-          ".sa",
-          ".hk",
-          ".tw",
-          ".no",
-          ".dk",
-          ".fi",
-          ".pl",
-          ".pt",
-          ".ie",
-          ".nz",
-          ".tr",
-          ".my",
-          ".cl",
-          ".co.uk",
-          ".be",
-          ".id",
-        ]}
+        domains={domainEndings}
       />
+      <button
+        onClick={() => handleConfirmSearchQuery()}
+        disabled={searchQuery.length < 3}
+        className="w-full h-8 bg-tertiary transition-all text-primary text-sm disabled:bg-secondary font-bold tracking-tighter flex items-center justify-center rounded-lg max-w-[400px]"
+      >
+        Search
+      </button>
+
       <div
         className={
           "w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4"
