@@ -1,11 +1,11 @@
+import { BulkDomainSearchResponse } from "@/app/interfaces";
 import { useState, useEffect } from "react";
 
 const useDomain = (searchQuery: string | undefined) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  // demo interface for placeholder
-  const [data, setData] = useState<string>();
+  const [data, setData] = useState<BulkDomainSearchResponse>();
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -21,10 +21,10 @@ const useDomain = (searchQuery: string | undefined) => {
         fetch(`/api/check-domain?q=${searchQuery}`)
           .then((response) => response.json())
           .then((data) => {
-            if (data.expires !== null && data.expires !== undefined) {
-              setData(data.expires);
+            if (data) {
+              setData(data);
             } else {
-              setData("Available");
+              setData(undefined);
             }
           })
           .catch(() => {
