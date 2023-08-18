@@ -1,73 +1,67 @@
 "use client";
-import DomainSelector from "@/components/DomainSelector";
 import LandingInfo from "@/components/LandingInfo";
 import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
-import { useState } from "react";
+import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 import SocialResult from "@/components/SocialResult";
-import domainEndings from "@/utils/domainEndings.json";
-import SelectedDomainTabs from "@/components/SelectedDomainTabs";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
-  const [confirmedSearchQuery, setConfirmedSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [displaySearchQuery, setDisplaySearchQuery] = useState("");
+  const [domainExpiry, setDomainExpiry] = useState("");
+  const [domainAvailable, setDomainAvailable] = useState(false);
 
-  const handleConfirmSearchQuery = () => {
-    let domainUrls: string[] = [];
-
-    if (selectedDomains.length > 0) {
-      domainUrls = selectedDomains.map((domain) => searchQuery + domain);
-    } else {
-      domainUrls = domainEndings.map((domain) => searchQuery + domain);
-    }
-
-    const urlQueryString = domainUrls.join(",");
-    setConfirmedSearchQuery(urlQueryString);
-  };
-
-  const handleUpdateSelectedDomains = (domain: string) => {
-    if (selectedDomains.includes(domain)) {
-      setSelectedDomains(selectedDomains.filter((d) => d !== domain));
-    } else {
-      setSelectedDomains([...selectedDomains, domain]);
-    }
-  };
+  const debounceTimerRef = useRef<number>();
 
   const handleUpdateSearchQuery = (query: string) => {
-    setSearchQuery(query);
+    setDisplaySearchQuery(query);
+    // debounce
+    clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = window.setTimeout(() => {
+      setSearchQuery(query);
+    }, 500);
   };
 
   const {
     data: domainData,
     error: domainError,
     loading: domainLoading,
-  } = useDomain(confirmedSearchQuery);
+  } = useDomain(searchQuery);
+
+  useEffect(() => {
+    if (domainData === "Available") {
+      setDomainAvailable(true);
+    } else if (domainData) {
+      const parsedData = Date.parse(domainData);
+      const newDate = new Date(parsedData);
+      setDomainExpiry(newDate.toDateString());
+    }
+  }, [domainData]);
+
+  useEffect(() => {
+    setDomainExpiry("");
+    setDomainAvailable(false);
+  }, [searchQuery]);
 
   return (
     <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
       <LandingInfo />
       <Search
-        searchQuery={searchQuery}
+        searchQuery={displaySearchQuery}
         handleUpdateSearchQuery={handleUpdateSearchQuery}
         loading={domainLoading}
       />
-
-      <SelectedDomainTabs selectedDomains={selectedDomains} />
-
-      <DomainSelector
-        handleUpdateSelectedDomains={handleUpdateSelectedDomains}
-        selectedDomains={selectedDomains}
-        domains={domainEndings}
-      />
-      <button
-        onClick={() => handleConfirmSearchQuery()}
-        disabled={searchQuery.length < 3}
-        className="w-full h-8 bg-tertiary transition-all text-primary text-sm disabled:bg-secondary font-bold tracking-tighter flex items-center justify-center rounded-lg max-w-[400px]"
-      >
-        Search
-      </button>
-
+      {domainExpiry && (
+        <p className={clsx(domainExpiry !== undefined ? "block" : "hidden")}>
+          Sorry, this domain is registered and expires on {domainExpiry}
+        </p>
+      )}
+      {domainAvailable && (
+        <p className={clsx(domainExpiry !== undefined ? "block" : "hidden")}>
+          Domain available!
+        </p>
+      )}
       <div
         className={
           "w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4"
