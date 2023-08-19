@@ -5,10 +5,7 @@ import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
 import { useState } from "react";
 import SocialResult from "@/components/SocialResult";
-import domainEndings from "@/utils/domainEndings.json";
-import SelectedDomainTabs from "@/components/SelectedDomainTabs";
 import DomainList from "@/components/DomainList/DomainList";
-import { handleConstructUrlString } from "@/utils";
 import { ConfirmedSearchQuery } from "./interfaces";
 
 export default function Home() {
@@ -44,25 +41,12 @@ export default function Home() {
       <LandingInfo />
       <Search
         searchQuery={searchQuery}
-        handleUpdateSearchQuery={handleUpdateSearchQuery}
         loading={domainLoading}
-      />
-      <SelectedDomainTabs
         selectedDomains={selectedDomains}
+        handleUpdateSearchQuery={handleUpdateSearchQuery}
         handleUpdateSelectedDomains={handleUpdateSelectedDomains}
+        handleConfirmSearchQuery={handleConfirmSearchQuery}
       />
-      <DomainSelector
-        handleUpdateSelectedDomains={handleUpdateSelectedDomains}
-        selectedDomains={selectedDomains}
-        domains={domainEndings}
-      />
-      <button
-        onClick={() => handleConfirmSearchQuery()}
-        disabled={searchQuery.length < 3}
-        className="w-full h-8 bg-tertiary transition-all text-primary text-sm disabled:bg-secondary font-bold tracking-tighter flex items-center justify-center rounded-lg max-w-[400px]"
-      >
-        Search
-      </button>
 
       <div
         className={
