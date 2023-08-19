@@ -6,9 +6,9 @@ import { SocialPlatform } from "@/app/interfaces/socialPlatforms";
 const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY || "";
 
 export async function GET(request: NextRequest) {
-  console.log("Fetching socials");
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
+  console.log(`Fetching socials: ${q}`);
 
   const socials = await kv.get<Record<SocialPlatform, boolean>>(`${q}-socials`);
 
