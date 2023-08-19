@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
+import axios from "axios";
+import { SocialPlatform } from "@/app/interfaces/socialPlatforms";
 
 const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY || "";
 
@@ -7,17 +9,26 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
 
-  const updatedEndpoint = `https://pointsdb-bulk-domain-check-v1.p.rapidapi.com/domain_check?domains=${q}`;
+  const domains = await kv.get(`${q}-domains`);
 
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": RAPID_API_KEY,
-      "X-RapidAPI-Host": "pointsdb-bulk-domain-check-v1.p.rapidapi.com",
-    },
-  };
+  if (domains) {
+    return NextResponse.json(domains);
+  } else {
+    // cache miss
+    const options = {
+      method: "GET",
+      url: `https://pointsdb-bulk-domain-check-v1.p.rapidapi.com/domain_check?domains=${q}`,
+      headers: {
+        "X-RapidAPI-Key": RAPID_API_KEY,
+        "X-RapidAPI-Host": "pointsdb-bulk-domain-check-v1.p.rapidapi.com",
+      },
+    };
 
-  const res = await fetch(updatedEndpoint, options);
+    const { data } = await axios(options);
 
-  return new NextResponse(res.body, { status: res.status });
+    // store in the cache
+    await kv.set(`${q}-domains`, data);
+
+    return NextResponse.json(data);
+  }
 }
