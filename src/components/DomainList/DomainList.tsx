@@ -15,7 +15,7 @@ function DomainList({ domainData }: DomainListProps) {
 
     return Object.keys(domainData)
       .sort((b, a) =>
-        domainData[a] === domainData[b] ? 0 : domainData[b] ? -1 : 1,
+        domainData[a] === domainData[b] ? 0 : domainData[b] ? -1 : 1
       )
       .map((domain) => (
         <div
@@ -24,7 +24,7 @@ function DomainList({ domainData }: DomainListProps) {
         >
           <p
             className={clsx(
-              domainData[domain] ? "text-tertiary" : "text-gray-400",
+              domainData[domain] ? "text-tertiary" : "text-gray-400"
             )}
           >
             {domain}
@@ -39,7 +39,7 @@ function DomainList({ domainData }: DomainListProps) {
   };
 
   return (
-    <div className="w-full bg-gray-800 rounded-lg p-5">
+    <div className="w-full bg-gray-800 rounded-lg p-4">
       <div className={"flex items-center justify-center gap-2 pb-2"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
