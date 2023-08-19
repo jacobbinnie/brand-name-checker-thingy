@@ -22,7 +22,7 @@ const renderMainDomains = (
         key={domain}
         className={clsx(
           isSelected ? "text-accent font-bold" : "text-tertiary font-regular",
-          "bg-primary flex justify-center items-center cursor-pointer"
+          "bg-gray-800 flex justify-center items-center cursor-pointer"
         )}
       >
         {domain}
@@ -45,7 +45,7 @@ const renderAlternativeDomains = (
         onClick={() => handleUpdateSelectedDomains(domain)}
         className={clsx(
           isSelected ? "text-accent font-bold" : "text-tertiary font-regular",
-          "w-full px-6 h-16 flex items-center hover:bg-secondary transition-all cursor-pointer"
+          "w-full px-6 h-16 flex items-center hover:bg-gray-600 transition-all cursor-pointer"
         )}
       >
         {domain}
@@ -62,7 +62,7 @@ function DomainSelector({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center max-w-[400px] bg-primary rounded-lg overflow-hidden">
+    <div className="w-full flex flex-col justify-center items-center max-w-[400px] bg-gray-800 rounded-lg overflow-hidden">
       <div className="w-full flex items-center">
         <div className="w-full grid grid-cols-4 h-16">
           {renderMainDomains(
@@ -79,7 +79,7 @@ function DomainSelector({
       <div
         className={clsx(
           showDropdown ? "h-[200px]" : "h-0",
-          "transition-all overflow-scroll no-scrollbar w-full bg-primary"
+          "transition-all overflow-scroll no-scrollbar w-full bg-gray-700"
         )}
       >
         {renderAlternativeDomains(

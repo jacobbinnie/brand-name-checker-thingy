@@ -22,7 +22,7 @@ function TrademarkCheck({ trademarkData }: TrademarkCheckProps) {
         return (
           <div
             key={trademark.keyword}
-            className="grid grid-cols-2 tracking-tighter justify-between"
+            className="grid grid-cols-2 tracking-tighter justify-between text-tertiary"
           >
             <p>{trademark.keyword}</p>
             <div className="flex justify-end gap-5">
@@ -68,7 +68,9 @@ function TrademarkCheck({ trademarkData }: TrademarkCheckProps) {
           />
         </svg>
 
-        <h2 className={"text-center text-2xl font-semibold"}>Trademarks</h2>
+        <h2 className={"text-center text-2xl font-semibold text-tertiary"}>
+          Trademarks
+        </h2>
       </div>
 
       {renderTrademarks()}

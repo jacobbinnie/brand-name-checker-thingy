@@ -15,7 +15,7 @@ function DomainList({ domainData }: DomainListProps) {
     return Object.keys(domainData).map((domain) => (
       <div
         key={domain}
-        className="flex tracking-tighter items-center justify-between"
+        className="flex tracking-tighter items-center justify-between text-tertiary"
       >
         <p>{domain}</p>
         {domainData[domain] ? (
@@ -45,7 +45,9 @@ function DomainList({ domainData }: DomainListProps) {
           />
         </svg>
 
-        <h2 className={"text-center text-2xl font-semibold"}>Domains</h2>
+        <h2 className={"text-center text-2xl font-semibold text-tertiary"}>
+          Domains
+        </h2>
       </div>
       {renderDomainResponses()}
     </div>

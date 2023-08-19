@@ -17,7 +17,7 @@ const SelectedDomainTabs = ({
         className="flex w-min h-8 items-center cursor-pointer bg-accent px-2 rounded-full gap-1 justify-center"
         onClick={() => handleUpdateSelectedDomains(domain)}
       >
-        <p>{domain}</p>
+        <p className="text-tertiary">{domain}</p>
         <XCircleIcon className="w-4 h-4" />
       </div>
     ));
