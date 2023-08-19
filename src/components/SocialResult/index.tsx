@@ -51,7 +51,7 @@ function SocialResult({ search, socialData }: SocialResultProps) {
         <table>
           <tbody>
             {Object.entries(socialData)
-              .filter((d) => importantSocials.includes(d[0] as SocialPlatform))
+              // .filter((d) => importantSocials.includes(d[0] as SocialPlatform))
               .map(([service, available]) => (
                 <tr key={service}>
                   <td className="text-tertiary">
