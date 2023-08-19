@@ -8,23 +8,17 @@ import SocialResult from "@/components/SocialResult";
 import domainEndings from "@/utils/domainEndings.json";
 import SelectedDomainTabs from "@/components/SelectedDomainTabs";
 import DomainList from "@/components/DomainList/DomainList";
+import { handleConstructUrlString } from "@/utils";
+import { ConfirmedSearchQuery } from "./interfaces";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
-  const [confirmedSearchQuery, setConfirmedSearchQuery] = useState("");
+  const [confirmedSearchQuery, setConfirmedSearchQuery] =
+    useState<ConfirmedSearchQuery>();
 
   const handleConfirmSearchQuery = () => {
-    let domainUrls: string[] = [];
-
-    if (selectedDomains.length > 0) {
-      domainUrls = selectedDomains.map((domain) => searchQuery + domain);
-    } else {
-      domainUrls = domainEndings.map((domain) => searchQuery + domain);
-    }
-
-    const urlQueryString = domainUrls.join(",");
-    setConfirmedSearchQuery(urlQueryString);
+    setConfirmedSearchQuery({ query: searchQuery, selectedDomains });
   };
 
   const handleUpdateSelectedDomains = (domain: string) => {
