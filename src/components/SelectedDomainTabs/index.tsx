@@ -18,7 +18,7 @@ const SelectedDomainTabs = ({
         onClick={() => handleUpdateSelectedDomains(domain)}
       >
         <p className="text-tertiary">{domain}</p>
-        <XCircleIcon className="w-4 h-4" />
+        <XCircleIcon className="w-4 h-4 text-tertiary" />
       </div>
     ));
   };
