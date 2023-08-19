@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
 import axios from "axios";
-import { SocialPlatform } from "@/app/interfaces/socialPlatforms";
 
 const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY || "";
 
