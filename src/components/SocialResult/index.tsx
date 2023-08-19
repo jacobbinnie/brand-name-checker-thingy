@@ -22,12 +22,11 @@ const capitialiseString = (text: string) =>
 function SocialResult({ search }: SocialResultProps) {
   const { data } = useSWR<Record<SocialPlatform, boolean>>(
     search ? `socials-${search?.query}` : null,
-    async () => (await axios(`/api/check-socials?q=${search?.query}`)).data,
+    async () => (await axios(`/api/check-socials?q=${search}`)).data,
     {
       revalidateIfStale: false,
       revalidateOnReconnect: false,
       revalidateOnFocus: false,
-      revalidateOnMount: false,
     },
   );
 
@@ -51,9 +50,9 @@ function SocialResult({ search }: SocialResultProps) {
       </div>
 
       {search?.query && (
-        <p
-          className={"text-center text-gray-300 font-semibold"}
-        >{`@${search?.query}`}</p>
+        <p className={"text-center text-gray-300 font-semibold"}>
+          {`@${search.query}`}
+        </p>
       )}
       {data && (
         <table>

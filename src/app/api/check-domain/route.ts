@@ -8,12 +8,15 @@ const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY || "";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
+  console.log(`Fetching domains: ${q}`);
 
   const domains = await kv.get(`${q}-domains`);
 
   if (domains) {
+    console.log("Fetched from cache");
     return NextResponse.json(domains);
   } else {
+    console.log("Cache miss");
     // cache miss
     const options = {
       method: "GET",
