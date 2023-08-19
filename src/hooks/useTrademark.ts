@@ -1,15 +1,17 @@
 import {
   BulkDomainSearchResponse,
   ConfirmedSearchQuery,
+  TrademarkSchema,
 } from "@/app/interfaces";
-import { handleConstructUrlString } from "@/utils";
 import { useState, useEffect } from "react";
 
-const useDomain = (confirmedSearchQuery: ConfirmedSearchQuery | undefined) => {
+const useTrademark = (
+  confirmedSearchQuery: ConfirmedSearchQuery | undefined
+) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [data, setData] = useState<BulkDomainSearchResponse>();
+  const [data, setData] = useState<TrademarkSchema>();
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -21,13 +23,8 @@ const useDomain = (confirmedSearchQuery: ConfirmedSearchQuery | undefined) => {
         clearTimeout(timerId);
       }
 
-      const urlString = handleConstructUrlString(
-        confirmedSearchQuery.query,
-        confirmedSearchQuery.selectedDomains
-      );
-
       const newTimer = setTimeout(() => {
-        fetch(`/api/check-domain?q=${urlString}`)
+        fetch(`/api/check-trademark?q=${confirmedSearchQuery.query}`)
           .then((response) => response.json())
           .then((data) => {
             if (data) {
@@ -61,4 +58,4 @@ const useDomain = (confirmedSearchQuery: ConfirmedSearchQuery | undefined) => {
   return { error, loading, data };
 };
 
-export default useDomain;
+export default useTrademark;
