@@ -1,18 +1,20 @@
 import useSWR from "swr";
 import { useEffect, useState } from "react";
+import { ConfirmedSearchQuery } from "@/app/interfaces";
 
 interface SocialResultProps {
-  searchTerm: string;
+  search?: ConfirmedSearchQuery;
 }
-function SocialResult({ searchTerm }: SocialResultProps) {
+function SocialResult({ search }: SocialResultProps) {
   const { data } = useSWR<{ available: boolean }>(
-    searchTerm ? `socials-${searchTerm}` : null,
+    search?.query ? `socials-${search?.query}` : null,
     async () =>
-      fetch(`/api/check-socials?q=${searchTerm}`).then((res) => res.json()),
+      fetch(`/api/check-socials?q=${search?.query}`).then((res) => res.json()),
   );
 
   return (
     <div className={"bg-gray-900 rounded-lg p-4 flex flex-col"}>
+      {JSON.stringify(search)}
       <h2 className={"text-center text-2xl font-semibold"}>Socials</h2>
       <table>
         <thead>
