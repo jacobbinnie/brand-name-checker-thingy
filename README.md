@@ -3,7 +3,7 @@
 
 ## Brand Name Checker Thingy
 
-This was a weekend job inspired by fresh fish burgers, cold auckland city temps and an unlawful amount of coffee with milk.
+This was a less than 24hr weekend job inspired by fresh fish burgers, cold auckland city temps and an unlawful amount of coffee with milk.
 
 Perform a search for multiple domains, social handles and trademarks using a single keyword query.
 
