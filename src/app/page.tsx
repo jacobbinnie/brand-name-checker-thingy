@@ -47,12 +47,10 @@ export default function Home() {
         handleUpdateSearchQuery={handleUpdateSearchQuery}
         loading={domainLoading}
       />
-
       <SelectedDomainTabs
         selectedDomains={selectedDomains}
         handleUpdateSelectedDomains={handleUpdateSelectedDomains}
       />
-
       <DomainSelector
         handleUpdateSelectedDomains={handleUpdateSelectedDomains}
         selectedDomains={selectedDomains}
@@ -74,7 +72,7 @@ export default function Home() {
         <DomainList domainData={domainData} />
 
         {/* Socials TODO: move this into its own component */}
-        <SocialResult />
+        <SocialResult search={confirmedSearchQuery} />
         {/* SEO TODO: move this into its own component */}
         <div className={"bg-gray-900 rounded-lg p-4"}>
           <h2 className={"text-center text-2xl font-semibold"}>SEO</h2>
