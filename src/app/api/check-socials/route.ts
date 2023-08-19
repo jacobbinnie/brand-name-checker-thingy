@@ -6,6 +6,7 @@ import { SocialPlatform } from "@/app/interfaces/socialPlatforms";
 const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY || "";
 
 export async function GET(request: NextRequest) {
+  console.log("Fetching socials");
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
 
@@ -28,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const { data } = await axios(options);
 
-    const { name, success, ...rest } = data;
+    const { username, success, ...rest } = data;
 
     await kv.set<Record<SocialPlatform, boolean>>(`${q}-socials`, rest);
 
