@@ -52,11 +52,17 @@ export default function Home() {
   const { data: socialData, isLoading: socialIsLoading } = useSWR<
     Record<SocialPlatform, boolean>
   >(
-    confirmedSearchQuery?.query
-      ? `socials-${confirmedSearchQuery.query}`
+    confirmedSearchQuery
+      ? confirmedSearchQuery.selectedDomains.length === 1
+        ? `socials-${confirmedSearchQuery.query}${confirmedSearchQuery.selectedDomains[0]}`
+        : `socials-${confirmedSearchQuery.query}`
       : null,
     async () =>
-      (await axios(`/api/check-socials?q=${confirmedSearchQuery?.query}`)).data,
+      (
+        await axios(
+          `/api/check-socials?q=${confirmedSearchQuery?.query}${confirmedSearchQuery?.selectedDomains[0]}`,
+        )
+      ).data,
     {
       revalidateIfStale: false,
       revalidateOnReconnect: false,

@@ -45,7 +45,9 @@ function SocialResult({ search, socialData }: SocialResultProps) {
 
       {search?.query && (
         <p className={"text-center text-gray-300 font-semibold"}>
-          {`@${search.query}`}
+          {search.selectedDomains.length === 1
+            ? `@${search.query}${search.selectedDomains[0]}`
+            : `@${search.query}`}
         </p>
       )}
       {socialData && (
