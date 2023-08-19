@@ -1,19 +1,28 @@
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import SelectedDomainTabs from "../SelectedDomainTabs";
+import DomainSelector from "../DomainSelector";
+import DomainEndings from "../../utils/domainEndings.json";
 
 interface SearchProps {
   searchQuery: string;
-  handleUpdateSearchQuery: (query: string) => void;
   loading: boolean;
+  selectedDomains: string[];
+  handleUpdateSearchQuery: (query: string) => void;
+  handleUpdateSelectedDomains: (domain: string) => void;
+  handleConfirmSearchQuery: () => void;
 }
 
 function Search({
   searchQuery,
-  handleUpdateSearchQuery,
   loading,
+  selectedDomains,
+  handleUpdateSearchQuery,
+  handleUpdateSelectedDomains,
+  handleConfirmSearchQuery,
 }: SearchProps) {
   return (
-    <div className="w-full max-w-[400px]">
+    <div className="w-full max-w-[400px] gap-5 flex flex-col transition-all">
       <div className="w-full relative flex justify-center">
         <input
           onChange={(e) => handleUpdateSearchQuery(e.target.value)}
@@ -29,6 +38,24 @@ function Search({
           )}
         />
       </div>
+
+      <SelectedDomainTabs
+        selectedDomains={selectedDomains}
+        handleUpdateSelectedDomains={handleUpdateSelectedDomains}
+      />
+
+      <DomainSelector
+        handleUpdateSelectedDomains={handleUpdateSelectedDomains}
+        selectedDomains={selectedDomains}
+        domains={DomainEndings}
+      />
+      <button
+        onClick={() => handleConfirmSearchQuery()}
+        disabled={searchQuery.length < 3}
+        className="w-full h-8 bg-tertiary transition-all text-primary text-sm disabled:bg-secondary font-bold tracking-tighter flex items-center justify-center rounded-lg max-w-[400px]"
+      >
+        Search
+      </button>
     </div>
   );
 }
