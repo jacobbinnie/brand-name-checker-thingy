@@ -7,6 +7,8 @@ import { useState } from "react";
 import SocialResult from "@/components/SocialResult";
 import DomainList from "@/components/DomainList/DomainList";
 import { ConfirmedSearchQuery } from "./interfaces";
+import useTrademark from "@/hooks/useTrademark";
+import TrademarkCheck from "@/components/TrademarkCheck/TrademarkCheck";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -36,6 +38,12 @@ export default function Home() {
     loading: domainLoading,
   } = useDomain(confirmedSearchQuery);
 
+  const {
+    data: trademarkData,
+    error: trademarkError,
+    loading: trademarkLoading,
+  } = useTrademark(confirmedSearchQuery);
+
   return (
     <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
       <LandingInfo />
@@ -57,10 +65,8 @@ export default function Home() {
 
         {/* Socials TODO: move this into its own component */}
         <SocialResult search={confirmedSearchQuery} />
-        {/* SEO TODO: move this into its own component */}
-        <div className={"bg-gray-900 rounded-lg p-4"}>
-          <h2 className={"text-center text-2xl font-semibold"}>SEO</h2>
-        </div>
+
+        <TrademarkCheck trademarkData={trademarkData} />
       </div>
     </div>
   );
