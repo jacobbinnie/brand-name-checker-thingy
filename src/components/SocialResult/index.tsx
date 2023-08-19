@@ -4,6 +4,7 @@ import { ConfirmedSearchQuery } from "@/app/interfaces";
 import { SocialPlatform } from "@/app/interfaces/socialPlatforms";
 import { CheckBadgeIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
+import clsx from "clsx";
 
 interface SocialResultProps {
   search?: ConfirmedSearchQuery;
@@ -52,12 +53,17 @@ function SocialResult({ search, socialData }: SocialResultProps) {
           <tbody>
             {Object.entries(socialData)
               // .filter((d) => importantSocials.includes(d[0] as SocialPlatform))
+              .sort((b, a) => (a[1] === b[1] ? 0 : b[1] ? -1 : 1))
               .map(([service, available]) => (
                 <tr key={service}>
-                  <td className="text-tertiary">
+                  <td
+                    className={clsx(
+                      available ? "text-tertiary" : "text-gray-400",
+                    )}
+                  >
                     {capitialiseString(service)}
                   </td>
-                  <td className={"flex justify-center"}>
+                  <td className={"flex justify-end"}>
                     {available ? (
                       <CheckBadgeIcon className="w-5 h-5 text-accent" />
                     ) : (

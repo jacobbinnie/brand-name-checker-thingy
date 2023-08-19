@@ -1,6 +1,7 @@
 import React from "react";
 import { BulkDomainSearchResponse } from "@/app/interfaces";
 import { CheckBadgeIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import clsx from "clsx";
 
 interface DomainListProps {
   domainData: BulkDomainSearchResponse | undefined;
@@ -12,19 +13,29 @@ function DomainList({ domainData }: DomainListProps) {
       return null;
     }
 
-    return Object.keys(domainData).map((domain) => (
-      <div
-        key={domain}
-        className="flex tracking-tighter items-center justify-between text-tertiary"
-      >
-        <p>{domain}</p>
-        {domainData[domain] ? (
-          <CheckBadgeIcon className="w-5 h-5 text-accent" />
-        ) : (
-          <XCircleIcon className="w-5 h-5 text-gray-700" />
-        )}
-      </div>
-    ));
+    return Object.keys(domainData)
+      .sort((b, a) =>
+        domainData[a] === domainData[b] ? 0 : domainData[b] ? -1 : 1,
+      )
+      .map((domain) => (
+        <div
+          key={domain}
+          className="flex tracking-tighter items-center justify-between text-tertiary"
+        >
+          <p
+            className={clsx(
+              domainData[domain] ? "text-tertiary" : "text-gray-400",
+            )}
+          >
+            {domain}
+          </p>
+          {domainData[domain] ? (
+            <CheckBadgeIcon className="w-5 h-5 text-accent" />
+          ) : (
+            <XCircleIcon className="w-5 h-5 text-gray-700" />
+          )}
+        </div>
+      ));
   };
 
   return (

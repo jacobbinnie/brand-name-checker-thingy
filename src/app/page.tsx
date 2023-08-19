@@ -19,7 +19,10 @@ export default function Home() {
     useState<ConfirmedSearchQuery>();
 
   const handleConfirmSearchQuery = () => {
-    setConfirmedSearchQuery({ query: searchQuery, selectedDomains });
+    setConfirmedSearchQuery({
+      query: searchQuery.toLowerCase().trim(),
+      selectedDomains,
+    });
   };
 
   const handleUpdateSelectedDomains = (domain: string) => {
@@ -58,7 +61,7 @@ export default function Home() {
       revalidateIfStale: false,
       revalidateOnReconnect: false,
       revalidateOnFocus: false,
-    }
+    },
   );
 
   return (
