@@ -22,7 +22,7 @@ function Search({
   handleConfirmSearchQuery,
 }: SearchProps) {
   return (
-    <div className="w-full max-w-[400px]">
+    <div className="w-full max-w-[400px] gap-5 flex flex-col transition-all">
       <div className="w-full relative flex justify-center">
         <input
           onChange={(e) => handleUpdateSearchQuery(e.target.value)}
