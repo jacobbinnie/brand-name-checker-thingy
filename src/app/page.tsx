@@ -1,5 +1,4 @@
 "use client";
-import DomainSelector from "@/components/DomainSelector";
 import LandingInfo from "@/components/LandingInfo";
 import Search from "@/components/Search";
 import useDomain from "@/hooks/useDomain";
@@ -37,7 +36,7 @@ export default function Home() {
   } = useDomain(confirmedSearchQuery);
 
   return (
-    <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-950">
+    <div className="w-full flex px-5 py-20 flex-col min-h-screen gap-5 items-center bg-gray-900">
       <LandingInfo />
       <Search
         searchQuery={searchQuery}

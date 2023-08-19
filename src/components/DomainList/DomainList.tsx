@@ -28,10 +28,8 @@ function DomainList({ domainData }: DomainListProps) {
   };
 
   return (
-    <div className="w-full bg-gray-900 rounded-lg p-5">
-      <h1 className="font-bold tracking-tighter text-xl mb-5">
-        Available Domains
-      </h1>
+    <div className="w-full bg-gray-800 rounded-lg p-5">
+      <h2 className={"text-center text-2xl font-semibold"}>Domains</h2>
       {renderDomainResponses()}
     </div>
   );
