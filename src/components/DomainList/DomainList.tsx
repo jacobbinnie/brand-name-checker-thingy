@@ -27,7 +27,14 @@ function DomainList({ domainData }: DomainListProps) {
     ));
   };
 
-  return <div className="w-full">{renderDomainResponses()}</div>;
+  return (
+    <div className="w-full bg-gray-900 rounded-lg p-5">
+      <h1 className="font-bold tracking-tighter text-xl mb-5">
+        Available Domains
+      </h1>
+      {renderDomainResponses()}
+    </div>
+  );
 }
 
 export default DomainList;
