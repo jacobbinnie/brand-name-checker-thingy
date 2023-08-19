@@ -21,7 +21,7 @@ function DomainList({ domainData }: DomainListProps) {
         {domainData[domain] ? (
           <CheckBadgeIcon className="w-5 h-5 text-accent" />
         ) : (
-          <XCircleIcon className="w-5 h-5 text-red-700" />
+          <XCircleIcon className="w-5 h-5 text-gray-700" />
         )}
       </div>
     ));
