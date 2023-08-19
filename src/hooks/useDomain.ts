@@ -1,7 +1,11 @@
-import { BulkDomainSearchResponse } from "@/app/interfaces";
+import {
+  BulkDomainSearchResponse,
+  ConfirmedSearchQuery,
+} from "@/app/interfaces";
+import { handleConstructUrlString } from "@/utils";
 import { useState, useEffect } from "react";
 
-const useDomain = (searchQuery: string | undefined) => {
+const useDomain = (confirmedSearchQuery: ConfirmedSearchQuery | undefined) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -12,13 +16,18 @@ const useDomain = (searchQuery: string | undefined) => {
     setLoading(true);
     setError(null);
 
-    if (searchQuery && searchQuery.length > 2) {
+    if (confirmedSearchQuery && confirmedSearchQuery.query.length > 2) {
       if (timerId) {
         clearTimeout(timerId);
       }
 
+      const urlString = handleConstructUrlString(
+        confirmedSearchQuery.query,
+        confirmedSearchQuery.selectedDomains
+      );
+
       const newTimer = setTimeout(() => {
-        fetch(`/api/check-domain?q=${searchQuery}`)
+        fetch(`/api/check-domain?q=${urlString}`)
           .then((response) => response.json())
           .then((data) => {
             if (data) {
@@ -47,7 +56,7 @@ const useDomain = (searchQuery: string | undefined) => {
         clearTimeout(timerId);
       }
     };
-  }, [searchQuery]);
+  }, [confirmedSearchQuery]);
 
   return { error, loading, data, setData };
 };
