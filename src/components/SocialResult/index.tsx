@@ -27,7 +27,7 @@ function SocialResult({ search }: SocialResultProps) {
       revalidateIfStale: false,
       revalidateOnReconnect: false,
       revalidateOnFocus: false,
-    }
+    },
   );
 
   return (
@@ -58,7 +58,7 @@ function SocialResult({ search }: SocialResultProps) {
         <table>
           <tbody>
             {Object.entries(data)
-              .filter((d) => importantSocials.includes(d[0] as SocialPlatform))
+              //.filter((d) => importantSocials.includes(d[0] as SocialPlatform))
               .map(([service, available]) => (
                 <tr key={service}>
                   <td>{capitialiseString(service)}</td>
