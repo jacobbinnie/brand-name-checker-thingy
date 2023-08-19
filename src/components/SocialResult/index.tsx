@@ -7,6 +7,7 @@ import axios from "axios";
 
 interface SocialResultProps {
   search?: ConfirmedSearchQuery;
+  socialData: Record<SocialPlatform, boolean> | undefined;
 }
 
 const importantSocials = [
@@ -19,17 +20,7 @@ const importantSocials = [
 const capitialiseString = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
 
-function SocialResult({ search }: SocialResultProps) {
-  const { data } = useSWR<Record<SocialPlatform, boolean>>(
-    search ? `socials-${search?.query}` : null,
-    async () => (await axios(`/api/check-socials?q=${search?.query}`)).data,
-    {
-      revalidateIfStale: false,
-      revalidateOnReconnect: false,
-      revalidateOnFocus: false,
-    }
-  );
-
+function SocialResult({ search, socialData }: SocialResultProps) {
   return (
     <div className={"bg-gray-800 rounded-lg p-4 flex flex-col"}>
       <div className={"flex items-center justify-center gap-2 pb-2"}>
@@ -56,10 +47,10 @@ function SocialResult({ search }: SocialResultProps) {
           {`@${search.query}`}
         </p>
       )}
-      {data && (
+      {socialData && (
         <table>
           <tbody>
-            {Object.entries(data)
+            {Object.entries(socialData)
               .filter((d) => importantSocials.includes(d[0] as SocialPlatform))
               .map(([service, available]) => (
                 <tr key={service}>
