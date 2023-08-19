@@ -13,7 +13,10 @@ function DomainList({ domainData }: DomainListProps) {
     }
 
     return Object.keys(domainData).map((domain) => (
-      <div key={domain} className="flex items-center justify-between">
+      <div
+        key={domain}
+        className="flex tracking-tighter items-center justify-between"
+      >
         <p>{domain}</p>
         {domainData[domain] ? (
           <CheckBadgeIcon className="w-5 h-5 text-accent" />
