@@ -7,6 +7,7 @@ import { useState } from "react";
 import SocialResult from "@/components/SocialResult";
 import domainEndings from "@/utils/domainEndings.json";
 import SelectedDomainTabs from "@/components/SelectedDomainTabs";
+import DomainList from "@/components/DomainList/DomainList";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -76,10 +77,8 @@ export default function Home() {
           "w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4"
         }
       >
-        {/* Domains TODO: move this into its own component */}
-        <div className={"bg-gray-900 rounded-lg p-4"}>
-          <h2 className={"text-center text-2xl font-semibold"}>Domains</h2>
-        </div>
+        <DomainList domainData={domainData} />
+
         {/* Socials TODO: move this into its own component */}
         <SocialResult />
         {/* SEO TODO: move this into its own component */}
