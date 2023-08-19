@@ -26,7 +26,7 @@ function Search({
       <div className="w-full relative flex justify-center">
         <input
           onChange={(e) => handleUpdateSearchQuery(e.target.value)}
-          className="w-full h-16 border-gray-400 focus:outline-none cursor-pointer focus:cursor-default text-small rounded-lg placeholder:text-small tracking-tighter placeholder:tracking-tighter bg-transparent border-2 focus:border-accent transition-all px-5"
+          className="w-full h-16 border-gray-400 text-tertiary focus:outline-none cursor-pointer focus:cursor-default text-small rounded-lg placeholder:text-small tracking-tighter placeholder:tracking-tighter bg-transparent border-2 focus:border-accent transition-all px-5"
           type="text"
           placeholder="Enter a name..."
           value={searchQuery}
